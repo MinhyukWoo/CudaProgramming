@@ -1,9 +1,10 @@
-﻿#include"ImageBlender.cuh"
-#include<random>
-#include<time.h>
-#include<iostream>
-#include<cmath>
-#include<algorithm>
+﻿#include "ImageBlender.cuh"
+
+#include <random>
+#include <time.h>
+#include <iostream>
+#include <cmath>
+#include <algorithm>
 #include <omp.h>
 using namespace std;
 
@@ -22,6 +23,8 @@ ImageBlender::ImageBlender(int size) {
 		_dst_img[i] = 0;
 	}
 }
+
+
 ImageBlender::~ImageBlender() {
 	delete _src_img1;
 	delete _src_img2;
@@ -29,6 +32,7 @@ ImageBlender::~ImageBlender() {
 }
 
 
+// 이미지 내부 값 전부 Print
 void ImageBlender::Print() {
 	cout << "src_img1: " << '[';
 	for (int i = 0; i < _size; i++)
