@@ -6,6 +6,7 @@
 using namespace std;
 
 
+// 구구단
 void PrintMultiplicationTable(int end) {
 	MultiplicationTable m_table;
 	clock_t gpu_start, gpu_end, cpu_start, cpu_end;
@@ -27,6 +28,7 @@ void PrintMultiplicationTable(int end) {
 	cout << "====================" << endl;
 }
 
+// 구구단 Print
 void PrintMultiplicationTable() {
 	PrintMultiplicationTable(9);
 	PrintMultiplicationTable(100);
@@ -35,12 +37,14 @@ void PrintMultiplicationTable() {
 	cin >> tmp;
 }
 
-
+// Image Blender
 void PrintImageBlendingResult(int size) {
 	ImageBlender image_blender(size);
-	pair<double, double> cpu_times = image_blender.Blend(0.5, CPU);
-	pair<double, double> mp_times = image_blender.Blend(0.5, MP);
-	pair<double, double> cuda_times = image_blender.Blend(0.5, CUDA);
+	const double weight = 0.5f;
+
+	pair<double, double> cpu_times = image_blender.Blend( weight, CPU );
+	pair<double, double> mp_times = image_blender.Blend( weight, MP );
+	pair<double, double> cuda_times = image_blender.Blend( weight, CUDA );
 	cout << "____________________" << endl;
 	cout << "실험환경: size=" << size << endl;
 	cout << " CPU: 연산 소요 시간(" << cpu_times.first << "ms), 총 소요 시간(" << cpu_times.second << "ms)" << endl;
