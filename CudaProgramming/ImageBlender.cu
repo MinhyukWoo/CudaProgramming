@@ -16,8 +16,9 @@ pair<double, double> ImageBlender::Blend(double weight, DeviceType device_type)
 {
 	double operation_time, total_time;
 	time_t operation_start, operation_end, total_start, total_end;
-
-	if (device_type == CUDA) // CUDA로 image blending 할 때
+	int device_count = 0;
+	cudaGetDeviceCount(&device_count);
+	if (device_type == CUDA && device_count != 0) // CUDA로 image blending 할 때
 	{
 		total_start = clock();
 		int * src_img_1_cuda, *src_img_2_cuda, *dst_img_cuda;
