@@ -15,18 +15,18 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ImageBlender.cpp">
+    <ClCompile Include="main.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="main.cpp">
+    <ClCompile Include="ImageBlender2d.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ImageBlender.cuh">
+    <ClInclude Include="MultiplicationTable.cuh">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="MultiplicationTable.cuh">
+    <ClInclude Include="ImageBlender2d.cuh">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
@@ -39,7 +39,7 @@
     <CudaCompile Include="MultiplicationTable.cu">
       <Filter>소스 파일</Filter>
     </CudaCompile>
-    <CudaCompile Include="ImageBlender.cu">
+    <CudaCompile Include="ImgeBlender2d.cu">
       <Filter>소스 파일</Filter>
     </CudaCompile>
   </ItemGroup>

@@ -2,7 +2,7 @@
 #include <iostream>
 #include <stdio.h>
 #include <time.h>
-#include "ImageBlender.cuh"
+#include "ImageBlender2d.cuh"
 using namespace std;
 
 
@@ -38,24 +38,41 @@ void PrintMultiplicationTable() {
 }
 
 // Image Blender
-void PrintImageBlendingResult(int size) {
-	ImageBlender image_blender(size);
+//void PrintImageBlendingResult(int size) {
+//	ImageBlender image_blender(size);
+//	const double weight = 0.5f;
+//
+//	pair<double, double> cpu_times = image_blender.Blend( weight, CPU );
+//	pair<double, double> mp_times = image_blender.Blend( weight, MP );
+//	pair<double, double> cuda_times = image_blender.Blend( weight, CUDA );
+//	cout << "____________________" << endl;
+//	cout << "실험환경: size=" << size << endl;
+//	cout << " CPU: 연산 소요 시간(" << cpu_times.first << "ms), 총 소요 시간(" << cpu_times.second << "ms)" << endl;
+//	cout << "  MP: 연산 소요 시간(" << mp_times.first << "ms), 총 소요 시간(" << mp_times.second << "ms)" << endl;
+//	cout << "CUDA: 연산 소요 시간(" << cuda_times.first << "ms), 총 소요 시간(" << cuda_times.second << "ms)" << endl;
+//	cout << "--------------------" << endl;
+//}
+
+void PrintImageBlendingResult(int rows, int cols) {
+	ImageBlender image_blender(rows, cols);
 	const double weight = 0.5f;
 
-	pair<double, double> cpu_times = image_blender.Blend( weight, CPU );
-	pair<double, double> mp_times = image_blender.Blend( weight, MP );
-	pair<double, double> cuda_times = image_blender.Blend( weight, CUDA );
-	cout << "____________________" << endl;
-	cout << "실험환경: size=" << size << endl;
+	//pair<double, double> cpu_times = image_blender.Blend(weight, CPU);
+	//pair<double, double> mp_times = image_blender.Blend(weight, MP);
+	pair<double, double> cuda_times = image_blender.Blend(weight, CUDA);
+	/*cout << "____________________" << endl;
+	cout << "실험환경: (" << rows << ", "<< cols << ")" << endl;
 	cout << " CPU: 연산 소요 시간(" << cpu_times.first << "ms), 총 소요 시간(" << cpu_times.second << "ms)" << endl;
 	cout << "  MP: 연산 소요 시간(" << mp_times.first << "ms), 총 소요 시간(" << mp_times.second << "ms)" << endl;
 	cout << "CUDA: 연산 소요 시간(" << cuda_times.first << "ms), 총 소요 시간(" << cuda_times.second << "ms)" << endl;
-	cout << "--------------------" << endl;
+	cout << "--------------------" << endl;*/
+	image_blender.Print();
 }
 
 int main() {
-	for (int i = 1; i <= 100000000; i *= 100) {
-		PrintImageBlendingResult(i);
+	for (int i = 1; i <= 10000; i *= 10) {
+		PrintImageBlendingResult(10, 10);
+		break;
 	}
 	cout << "프로그램이 종료되었습니다." << endl;
 	char tmp[100];

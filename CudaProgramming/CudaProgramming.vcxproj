@@ -115,20 +115,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="ImageBlender.cpp" />
+    <ClCompile Include="ImageBlender2d.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <CudaCompile Include="ImageBlender.cu">
-      <FileType>Document</FileType>
-    </CudaCompile>
+    <CudaCompile Include="ImgeBlender2d.cu" />
     <CudaCompile Include="MultiplicationTable.cu">
       <FileType>Document</FileType>
     </CudaCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ImageBlender.cuh" />
     <ClInclude Include="MultiplicationTable.cuh" />
+    <ClInclude Include="ImageBlender2d.cuh" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Lenna.png" />
