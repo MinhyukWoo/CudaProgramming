@@ -17,7 +17,7 @@ pair<double, double> ImageBlender::Blend(double weight, DeviceType device_type)
 	double operation_time, total_time;
 	time_t operation_start, operation_end, total_start, total_end;
 	int device_count = 0;
-	cudaGetDeviceCount(&device_count);
+	cudaGetDeviceCount(&device_count); // CUDA를 사용할 수 있는 device인지 점검하기 위해
 	if (device_type == CUDA && device_count != 0) // CUDA로 image blending 할 때
 	{
 		total_start = clock();
@@ -25,19 +25,22 @@ pair<double, double> ImageBlender::Blend(double weight, DeviceType device_type)
 		int row_byte_size = _rows * sizeof(int*);
 		int col_byte_size = _cols * sizeof(int);
 
-		// Device memory 동적 할당
+		// Device memory에 포인터 배열 동적 할당
 		cudaMalloc((void **)&src_img1_cuda, row_byte_size);
 		cudaMalloc((void **)&src_img2_cuda, row_byte_size);
 		cudaMalloc((void **)&dst_img_cuda, row_byte_size);
+		// Host memory에 포인터 배열 동적 할당
 		int **src_img1_cuda_row = new int*[_rows];
 		int **src_img2_cuda_row = new int*[_rows];
 		int **dst_img_cuda_row = new int*[_rows];
+		// Host의 포인터 배열에 device memory에 동적 할당한 포인터 저장
 		for (int i = 0; i < _rows; i++)
 		{
 			cudaMalloc(src_img1_cuda_row + i, col_byte_size);
 			cudaMalloc(src_img2_cuda_row + i, col_byte_size);
 			cudaMalloc(dst_img_cuda_row + i, col_byte_size);
 		}
+		// Host의 포인터 배열을 device의 포인터 배열에 복사
 		cudaMemcpy(src_img1_cuda, src_img1_cuda_row, row_byte_size, cudaMemcpyHostToDevice);
 		cudaMemcpy(src_img2_cuda, src_img2_cuda_row, row_byte_size, cudaMemcpyHostToDevice);
 		cudaMemcpy(dst_img_cuda, dst_img_cuda_row, row_byte_size, cudaMemcpyHostToDevice);
@@ -47,14 +50,13 @@ pair<double, double> ImageBlender::Blend(double weight, DeviceType device_type)
 		{
 			cudaMemcpy(src_img1_cuda_row[i], _src_img1[i], col_byte_size, cudaMemcpyHostToDevice);
 			cudaMemcpy(src_img2_cuda_row[i], _src_img2[i], col_byte_size, cudaMemcpyHostToDevice);
-			cudaMemcpy(dst_img_cuda_row[i], _dst_img[i], col_byte_size, cudaMemcpyHostToDevice);
 		}
 
 		// GPU에서 연산하도록 BlendByGpu 커널 launch
-		// 이때 size에 맞게 1024개의 thread를 가지고 있는 블록을 만듦 : <<< Parameter 수, Thread 수 >>>
 		operation_start = clock();
-		dim3 threads_per_block(16, 16);
-		dim3 num_blocks(1 + _rows / threads_per_block.x, 1 + _cols / threads_per_block.y);
+		dim3 threads_per_block(16, 16); // x, y 별 thread의 개수 지정
+		dim3 num_blocks(1 + _rows / threads_per_block.x, 1 + _cols / threads_per_block.y); // x, y 별 block의 개수 지정
+		// 런치할 때 <<< block의 dim3 변수, thread의 dim3 변수 >>> 지정
 		BlendByGpu << < num_blocks, threads_per_block >> > (src_img1_cuda, src_img2_cuda, dst_img_cuda, _rows, _cols, weight);
 		cudaDeviceSynchronize(); // GPU 연산 모두 끝날 때까지 다음 코드 실행 막음
 		operation_end = clock();
@@ -74,6 +76,7 @@ pair<double, double> ImageBlender::Blend(double weight, DeviceType device_type)
 		cudaFree(src_img1_cuda);
 		cudaFree(src_img2_cuda);
 		cudaFree(dst_img_cuda);
+		// Host memory 해제
 		delete[] src_img1_cuda_row;
 		delete[] src_img2_cuda_row;
 		delete[] dst_img_cuda_row;

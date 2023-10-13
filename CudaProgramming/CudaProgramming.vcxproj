@@ -119,7 +119,7 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <CudaCompile Include="ImgeBlender2d.cu" />
+    <CudaCompile Include="ImageBlender2d.cu" />
     <CudaCompile Include="MultiplicationTable.cu">
       <FileType>Document</FileType>
     </CudaCompile>
