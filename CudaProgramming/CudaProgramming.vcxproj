@@ -123,10 +123,12 @@
     <CudaCompile Include="MultiplicationTable.cu">
       <FileType>Document</FileType>
     </CudaCompile>
+    <CudaCompile Include="VectorAdditionUsingStream.cu" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MultiplicationTable.cuh" />
     <ClInclude Include="ImageBlender2d.cuh" />
+    <ClInclude Include="VectorAdditionUsingStream.cuh" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Lenna.png" />
