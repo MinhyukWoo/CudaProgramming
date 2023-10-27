@@ -4,6 +4,7 @@
 #include <time.h>
 #include "ImageBlender2d.cuh"
 #include "VectorAdditionUsingStream.cuh"
+#include "GPUManager.cuh"
 using namespace std;
 
 
@@ -74,11 +75,44 @@ void PrintVectorAdditionUsingStream() {
 	VectorAdditionUsingStream vectorAddition2(100000, 10);
 }
 
-int main() {
-	//for (int i = 1; i <= 10000; i *= 10) {
-	//	PrintImageBlendingResult(i, i);
+void addTwoWordsByCpu(WORD *dstPtr, WORD *srcPtr1, WORD *srcPtr2, size_t index) {
+	dstPtr[index] = srcPtr1[index] < USHRT_MAX - srcPtr2[index] ? srcPtr1[index] + srcPtr2[index] : USHRT_MAX;
+}
+
+void TestGPUManager(size_t length = 100) {
+	WORD* ptr1 = new WORD[length];
+	WORD* ptr2 = new WORD[length];
+	WORD* ptr3 = new WORD[length];
+	for (int i = 0; i < length; i++) {
+		ptr1[i] = rand() % USHRT_MAX;
+		ptr2[i] = rand() % USHRT_MAX;
+	}
+
+
+	// CPU
+	//time_t startCpu = clock();
+	//for (int i = 0; i < length; i++) {
+	//	addTwoWordsByCpu(ptr3, ptr1, ptr2, i);
 	//}
-	PrintVectorAdditionUsingStream();
+	//time_t endCpu = clock();
+	//printf("CPU DONE in %dms\n", endCpu - startCpu);
+
+	// GPU
+	GPUManager gpuManager;
+	time_t startGpu = clock();
+	gpuManager.Process(ptr3, ptr1, ptr2, length, NULL);
+	time_t endGpu = clock();
+
+	
+	printf("CUDA DONE in %dms\n", endGpu - startGpu);
+	printf("%3c  %5s %5s %5s\n", ' ', "src1", "src2", "dst");
+	for (int i = 0; i < length; i++) {
+		printf("%3d: %5d %5d %5d\n", i, ptr1[i], ptr2[i], ptr3[i]);
+	}
+}
+
+int main() {
+	TestGPUManager();
 	cout << "프로그램이 종료되었습니다." << endl;
 	char tmp[100];
 	cin >> tmp;

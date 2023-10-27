@@ -32,6 +32,9 @@
     <ClInclude Include="VectorAdditionUsingStream.cuh">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="GPUManager.cuh">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Lenna.png">
@@ -46,6 +49,9 @@
       <Filter>소스 파일</Filter>
     </CudaCompile>
     <CudaCompile Include="VectorAdditionUsingStream.cu">
+      <Filter>소스 파일</Filter>
+    </CudaCompile>
+    <CudaCompile Include="GPUManager.cu">
       <Filter>소스 파일</Filter>
     </CudaCompile>
   </ItemGroup>
