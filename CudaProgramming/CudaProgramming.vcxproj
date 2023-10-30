@@ -127,7 +127,10 @@
     <CudaCompile Include="VectorAdditionUsingStream.cu" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="GPUEnum.cuh" />
+    <ClInclude Include="GPUFunctions.cuh" />
     <ClInclude Include="GPUManager.cuh" />
+    <ClInclude Include="GPUTypes.cuh" />
     <ClInclude Include="MultiplicationTable.cuh" />
     <ClInclude Include="ImageBlender2d.cuh" />
     <ClInclude Include="VectorAdditionUsingStream.cuh" />

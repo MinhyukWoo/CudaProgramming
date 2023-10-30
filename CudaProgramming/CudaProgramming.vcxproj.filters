@@ -35,6 +35,15 @@
     <ClInclude Include="GPUManager.cuh">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="GPUFunctions.cuh">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="GPUTypes.cuh">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="GPUEnum.cuh">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Lenna.png">

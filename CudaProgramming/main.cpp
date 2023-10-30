@@ -5,8 +5,8 @@
 #include "ImageBlender2d.cuh"
 #include "VectorAdditionUsingStream.cuh"
 #include "GPUManager.cuh"
-using namespace std;
 
+using namespace std;
 
 // 구구단
 void PrintMultiplicationTable(int end) {
@@ -100,7 +100,7 @@ void TestGPUManager(size_t length = 100) {
 	// GPU
 	GPUManager gpuManager;
 	time_t startGpu = clock();
-	gpuManager.Process(ptr3, ptr1, ptr2, length, NULL);
+	gpuManager.Process(ptr3, ptr1, ptr2, length, E_CUDA_FUNC::CUDA_FUNC_ADDTWOWORDS);
 	time_t endGpu = clock();
 
 	
