@@ -122,11 +122,11 @@ void TestGPUManager(size_t length = 100) {
 	printf("====================\n");
 	// CPU
 	start = clock();
-	for (int i = 0; i < length; i++) {
+	for (size_t i = 0; i < length; i++) {
 		AddByCpu(ptr3, ptr1, ptr2, i);
 	}
 	end = clock();
-	printf("CPU DONE in %dms\n", end - start);
+	printf("CPU DONE in %lldms\n", end - start);
 	PrintWords(ptr1, ptr2, ptr3, length);
 
 	// GPU
@@ -146,11 +146,11 @@ void TestGPUManager(size_t length = 100) {
 	printf("====================\n");
 	// CPU
 	start = clock();
-	for (int i = 0; i < length; i++) {
+	for (size_t i = 0; i < length; i++) {
 		SubtractByCpu(ptr3, ptr1, ptr2, i);
 	}
 	end = clock();
-	printf("CPU DONE in %dms\n", end - start);
+	printf("CPU DONE in %lldms\n", end - start);
 	PrintWords(ptr1, ptr2, ptr3, length);
 
 	// GPU
@@ -170,11 +170,11 @@ void TestGPUManager(size_t length = 100) {
 	printf("====================\n");
 	// CPU
 	start = clock();
-	for (int i = 0; i < length; i++) {
+	for (size_t i = 0; i < length; i++) {
 		MinByCpu(ptr3, ptr1, ptr2, i);
 	}
 	end = clock();
-	printf("CPU DONE in %dms\n", end - start);
+	printf("CPU DONE in %lldms\n", end - start);
 	PrintWords(ptr1, ptr2, ptr3, length);
 
 	// GPU
