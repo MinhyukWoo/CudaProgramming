@@ -5,7 +5,10 @@ extern "C" {//<-- extern ½ÃÀÛ
 #endif
 	enum E_CUDA_FUNC
 	{
-		CUDA_FUNC_ADDTWOWORDS = 0,
+		CUDA_FUNC_NONE = 0,
+		CUDA_FUNC_ADD,
+		CUDA_FUNC_SUBTRACT,
+		CUDA_FUNC_MIN,
 
 		_E_CUDA_FUNC_END_
 	};

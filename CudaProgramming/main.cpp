@@ -5,6 +5,7 @@
 #include "ImageBlender2d.cuh"
 #include "VectorAdditionUsingStream.cuh"
 #include "GPUManager.cuh"
+#include<algorithm>
 
 using namespace std;
 
@@ -75,44 +76,143 @@ void PrintVectorAdditionUsingStream() {
 	VectorAdditionUsingStream vectorAddition2(100000, 10);
 }
 
-void addTwoWordsByCpu(WORD *dstPtr, WORD *srcPtr1, WORD *srcPtr2, size_t index) {
+// ========================================
+
+void AddByCpu(WORD *dstPtr, WORD *srcPtr1, WORD *srcPtr2, size_t index) {
 	dstPtr[index] = srcPtr1[index] < USHRT_MAX - srcPtr2[index] ? srcPtr1[index] + srcPtr2[index] : USHRT_MAX;
+}
+
+void SubtractByCpu(WORD *dstPtr, WORD *srcPtr1, WORD *srcPtr2, size_t index) {
+	dstPtr[index] = srcPtr1[index] >= srcPtr2[index] ? srcPtr1[index] - srcPtr2[index] : 0;
+}
+
+void MinByCpu(WORD *dstPtr, WORD *srcPtr1, WORD *srcPtr2, size_t index) {
+	dstPtr[index] = std::min(srcPtr1[index], srcPtr2[index]);
+};
+
+void PrintWords(WORD* ptr1, WORD* ptr2, WORD* ptr3, size_t length) {
+	size_t subLength = length > 10 ? 10 : length;
+	printf("%3c  %5s %5s %5s\n", ' ', "src1", "src2", "dst");
+	for (size_t i = 0; i < subLength; i++) {
+		printf("%3d: %5d %5d %5d\n", i+1, ptr1[i], ptr2[i], ptr3[i]);
+	}
+	if (length > subLength) {
+		printf("...\n");
+		size_t i = length - 1;
+		printf("%3d: %5d %5d %5d\n", i+1, ptr1[i], ptr2[i], ptr3[i]);
+	}
+	printf("\n");
 }
 
 void TestGPUManager(size_t length = 100) {
 	WORD* ptr1 = new WORD[length];
 	WORD* ptr2 = new WORD[length];
 	WORD* ptr3 = new WORD[length];
-	for (int i = 0; i < length; i++) {
+	time_t start, end;
+	GPUManager gpuManager;
+
+	for (size_t i = 0; i < length; i++) {
 		ptr1[i] = rand() % USHRT_MAX;
 		ptr2[i] = rand() % USHRT_MAX;
 	}
 
-
+	// START:ADD
+	printf("====================\n");
+	printf("  %s\n", "ADD");
+	printf("====================\n");
 	// CPU
-	//time_t startCpu = clock();
-	//for (int i = 0; i < length; i++) {
-	//	addTwoWordsByCpu(ptr3, ptr1, ptr2, i);
-	//}
-	//time_t endCpu = clock();
-	//printf("CPU DONE in %dms\n", endCpu - startCpu);
+	start = clock();
+	for (int i = 0; i < length; i++) {
+		AddByCpu(ptr3, ptr1, ptr2, i);
+	}
+	end = clock();
+	printf("CPU DONE in %dms\n", end - start);
+	PrintWords(ptr1, ptr2, ptr3, length);
 
 	// GPU
-	GPUManager gpuManager;
-	time_t startGpu = clock();
-	gpuManager.Process(ptr3, ptr1, ptr2, length, E_CUDA_FUNC::CUDA_FUNC_ADDTWOWORDS);
-	time_t endGpu = clock();
-
-	
-	printf("CUDA DONE in %dms\n", endGpu - startGpu);
-	printf("%3c  %5s %5s %5s\n", ' ', "src1", "src2", "dst");
-	for (int i = 0; i < length; i++) {
-		printf("%3d: %5d %5d %5d\n", i, ptr1[i], ptr2[i], ptr3[i]);
+	start = clock();
+	if (gpuManager.IsCUDAAvailable()) {
+		gpuManager.Process(ptr3, ptr1, ptr2, length, E_CUDA_FUNC::CUDA_FUNC_ADD);
 	}
+	end = clock();
+	printf("CUDA DONE in %lldms\n", end - start);
+	PrintWords(ptr1, ptr2, ptr3, length);
+	// DONE: ADD
+
+
+	// START:SUBTRACT
+	printf("====================\n");
+	printf("  %s\n", "SUBTRACT");
+	printf("====================\n");
+	// CPU
+	start = clock();
+	for (int i = 0; i < length; i++) {
+		SubtractByCpu(ptr3, ptr1, ptr2, i);
+	}
+	end = clock();
+	printf("CPU DONE in %dms\n", end - start);
+	PrintWords(ptr1, ptr2, ptr3, length);
+
+	// GPU
+	start = clock();
+	if (gpuManager.IsCUDAAvailable()) {
+		gpuManager.Process(ptr3, ptr1, ptr2, length, E_CUDA_FUNC::CUDA_FUNC_SUBTRACT);
+	}
+	end = clock();
+	printf("CUDA DONE in %lldms\n", end - start);
+	PrintWords(ptr1, ptr2, ptr3, length);
+	// DONE: SUBTRACT
+
+
+	// START:MIN
+	printf("====================\n");
+	printf("  %s\n", "MIN");
+	printf("====================\n");
+	// CPU
+	start = clock();
+	for (int i = 0; i < length; i++) {
+		MinByCpu(ptr3, ptr1, ptr2, i);
+	}
+	end = clock();
+	printf("CPU DONE in %dms\n", end - start);
+	PrintWords(ptr1, ptr2, ptr3, length);
+
+	// GPU
+	start = clock();
+	if (gpuManager.IsCUDAAvailable()) {
+		gpuManager.Process(ptr3, ptr1, ptr2, length, E_CUDA_FUNC::CUDA_FUNC_MIN);
+	}
+	end = clock();
+	printf("CUDA DONE in %lldms\n", end - start);
+	PrintWords(ptr1, ptr2, ptr3, length);
+	// DONE: MIN
+
+
+	// START: Error Handling
+	printf("====================\n");
+	printf("  %s\n", "Error Handling");
+	printf("====================\n");
+
+	// GPU
+	try
+	{
+		start = clock();
+		if (gpuManager.IsCUDAAvailable()) {
+			gpuManager.Process(ptr3, ptr1, ptr2, length, (E_CUDA_FUNC)100);
+		}
+		end = clock();
+		printf("CUDA DONE in %lldms\n", end - start);
+		PrintWords(ptr1, ptr2, ptr3, length);
+	}
+	catch (const std::exception& except)
+	{
+		cout << except.what() << endl;
+	}
+	// DONE: Error Handling
 }
 
 int main() {
-	TestGPUManager();
+	TestGPUManager(10000000);
 	cout << "프로그램이 종료되었습니다." << endl;
 	char tmp[100];
 	cin >> tmp;

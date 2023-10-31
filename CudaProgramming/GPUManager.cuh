@@ -12,11 +12,12 @@ extern "C" {//<-- extern ½ÃÀÛ
 		virtual ~GPUManager() {
 		};
 		void Process(WORD *dstPtr, WORD *srcPtr1, WORD *srcPtr2, size_t size, E_CUDA_FUNC indexKernelsTwo1D);
+		bool IsCUDAAvailable();
 	private:
 		int _threadSize;
 	};
 
-
+	void AddKernelTwo1D();
 #ifdef __cplusplus 
 }
 #endif
