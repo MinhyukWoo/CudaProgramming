@@ -1,6 +1,6 @@
 #pragma once
-#include "GPUFunctions.cuh"
-#include "GPUManager.cuh"
+#include "GPUFunctions.hpp"
+#include "GPUManager.hpp"
 #include "GPUTypes.cuh"
 #include "GPUEnum.cuh"
 #include "device_launch_parameters.h"

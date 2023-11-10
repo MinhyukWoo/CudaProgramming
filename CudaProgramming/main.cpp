@@ -4,8 +4,9 @@
 #include <time.h>
 #include "ImageBlender2d.cuh"
 #include "VectorAdditionUsingStream.cuh"
-#include "GPUManager.cuh"
+#include "GPUManager.hpp"
 #include<algorithm>
+#include "test.hpp"
 
 using namespace std;
 
@@ -212,7 +213,14 @@ void TestGPUManager(size_t length = 100) {
 }
 
 int main() {
-	TestGPUManager(10000000);
+	//TestGPUManager(10000000);
+	int arr[] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+	cout << "====================" << endl;
+	cout << "나쁜 예시" << endl;
+	cout << "1부터 10까지 합: " << GetBadSum(arr, 10) << endl;
+	cout << "====================" << endl; 
+	cout << "적합한 예시" << endl;
+	cout << "1부터 10까지 합: " << GetReducedSum(arr, 10) << endl;
 	cout << "프로그램이 종료되었습니다." << endl;
 	char tmp[100];
 	cin >> tmp;

@@ -119,20 +119,22 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <CudaCompile Include="GPUManager.cu" />
+    <CudaCompile Include="GPUManager.cpp" />
     <CudaCompile Include="ImageBlender2d.cu" />
     <CudaCompile Include="MultiplicationTable.cu">
       <FileType>Document</FileType>
     </CudaCompile>
+    <CudaCompile Include="test.cu" />
     <CudaCompile Include="VectorAdditionUsingStream.cu" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GPUEnum.cuh" />
-    <ClInclude Include="GPUFunctions.cuh" />
-    <ClInclude Include="GPUManager.cuh" />
+    <ClInclude Include="GPUFunctions.hpp" />
+    <ClInclude Include="GPUManager.hpp" />
     <ClInclude Include="GPUTypes.cuh" />
     <ClInclude Include="MultiplicationTable.cuh" />
     <ClInclude Include="ImageBlender2d.cuh" />
+    <ClInclude Include="test.hpp" />
     <ClInclude Include="VectorAdditionUsingStream.cuh" />
   </ItemGroup>
   <ItemGroup>
