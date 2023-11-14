@@ -44,7 +44,7 @@
     <ClInclude Include="GPUFunctions.hpp">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="test.hpp">
+    <ClInclude Include="Reduce.hpp">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
@@ -66,7 +66,7 @@
     <CudaCompile Include="GPUManager.cpp">
       <Filter>소스 파일</Filter>
     </CudaCompile>
-    <CudaCompile Include="test.cu">
+    <CudaCompile Include="Reduce.cu">
       <Filter>소스 파일</Filter>
     </CudaCompile>
   </ItemGroup>

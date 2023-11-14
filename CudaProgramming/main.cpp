@@ -6,7 +6,7 @@
 #include "VectorAdditionUsingStream.cuh"
 #include "GPUManager.hpp"
 #include<algorithm>
-#include "test.hpp"
+#include "Reduce.hpp"
 
 using namespace std;
 
@@ -214,13 +214,13 @@ void TestGPUManager(size_t length = 100) {
 
 int main() {
 	//TestGPUManager(10000000);
-	int arr[] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+	int arr[] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20 };
 	cout << "====================" << endl;
 	cout << "나쁜 예시" << endl;
-	cout << "1부터 10까지 합: " << GetBadSum(arr, 10) << endl;
+	cout << "1부터 20까지 합: " << GetBadSum(arr, 20) << endl;
 	cout << "====================" << endl; 
 	cout << "적합한 예시" << endl;
-	cout << "1부터 10까지 합: " << GetReducedSum(arr, 10) << endl;
+	cout << "1부터 20까지 합: " << Reduce(arr, 20, E_BOPER::PLUS) << endl;
 	cout << "프로그램이 종료되었습니다." << endl;
 	char tmp[100];
 	cin >> tmp;
