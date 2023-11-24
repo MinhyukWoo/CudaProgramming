@@ -1,1 +1,3 @@
-console.log("Sent from GitHub.");
+function printTestLog(){
+  console.log("Sent from GitHub.");
+}
