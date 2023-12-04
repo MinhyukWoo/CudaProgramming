@@ -125,16 +125,18 @@
       <FileType>Document</FileType>
     </CudaCompile>
     <CudaCompile Include="Reduce.cu" />
+    <CudaCompile Include="struct.cu" />
     <CudaCompile Include="VectorAdditionUsingStream.cu" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GPUEnum.cuh" />
     <ClInclude Include="GPUFunctions.hpp" />
     <ClInclude Include="GPUManager.hpp" />
-    <ClInclude Include="GPUTypes.cuh" />
+    <ClInclude Include="GPUTypes.hpp" />
     <ClInclude Include="MultiplicationTable.cuh" />
     <ClInclude Include="ImageBlender2d.cuh" />
     <ClInclude Include="Reduce.hpp" />
+    <ClInclude Include="struct.hpp" />
     <ClInclude Include="VectorAdditionUsingStream.cuh" />
   </ItemGroup>
   <ItemGroup>

@@ -1,7 +1,7 @@
 #pragma once
 #include "GPUFunctions.hpp"
 #include "GPUManager.hpp"
-#include "GPUTypes.cuh"
+#include "GPUTypes.hpp"
 #include "GPUEnum.cuh"
 #include "device_launch_parameters.h"
 #include <stdio.h>

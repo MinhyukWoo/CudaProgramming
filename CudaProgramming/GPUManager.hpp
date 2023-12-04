@@ -1,6 +1,6 @@
 #pragma once
 #include <cuda_runtime.h>
-#include "GPUTypes.cuh"
+#include "GPUTypes.hpp"
 #include "GPUEnum.cuh"
 
 #ifdef __cplusplus 

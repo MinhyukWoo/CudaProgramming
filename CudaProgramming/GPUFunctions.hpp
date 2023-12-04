@@ -1,5 +1,5 @@
 #pragma once
-#include "GPUTypes.cuh"
+#include "GPUTypes.hpp"
 #include "GPUEnum.cuh"
 #include "math_functions.h"
 #ifdef __cplusplus 

@@ -5,8 +5,9 @@
 #include "ImageBlender2d.cuh"
 #include "VectorAdditionUsingStream.cuh"
 #include "GPUManager.hpp"
-#include<algorithm>
+#include <algorithm>
 #include "Reduce.hpp"
+#include "struct.hpp"
 
 using namespace std;
 
@@ -212,15 +213,33 @@ void TestGPUManager(size_t length = 100) {
 	// DONE: Error Handling
 }
 
-int main() {
-	//TestGPUManager(10000000);
+void TestReduce() {
 	int arr[] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20 };
 	cout << "====================" << endl;
 	cout << "나쁜 예시" << endl;
 	cout << "1부터 20까지 합: " << GetBadSum(arr, 20) << endl;
-	cout << "====================" << endl; 
+	cout << "====================" << endl;
 	cout << "적합한 예시" << endl;
-	cout << "1부터 20까지 합: " << Reduce(arr, 20, E_BOPER::PLUS) << endl;
+	cout << "1부터 20까지 최솟값: " << Reduce(arr, 20, E_BOPER::MIN) << endl;
+}
+
+void TestGLCM() {
+	WORD image[18] = { 1, 1, 5, 6, 8, 8, 2, 3, 5, 7, 0, 2, 0, 2, 3, 5, 6, 7 };
+	size_t rowLength = 3, colLength = 6;
+	unsigned int * comatrix = GetComatrix(image, rowLength, colLength);
+	for (int i = 0; i < 9; i++)
+	{
+		for (int j = 0; j < 9; j++)
+		{
+			printf("%d ", comatrix[i * 9 + j]);
+		}
+		printf("\n");
+	}
+}
+
+int main() {
+	//TestGLCM();
+	TestStruct();
 	cout << "프로그램이 종료되었습니다." << endl;
 	char tmp[100];
 	cin >> tmp;

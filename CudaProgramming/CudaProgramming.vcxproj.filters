@@ -32,9 +32,6 @@
     <ClInclude Include="VectorAdditionUsingStream.cuh">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="GPUTypes.cuh">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="GPUEnum.cuh">
       <Filter>헤더 파일</Filter>
     </ClInclude>
@@ -45,6 +42,12 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Reduce.hpp">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="GPUTypes.hpp">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="struct.hpp">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
@@ -67,6 +70,9 @@
       <Filter>소스 파일</Filter>
     </CudaCompile>
     <CudaCompile Include="Reduce.cu">
+      <Filter>소스 파일</Filter>
+    </CudaCompile>
+    <CudaCompile Include="struct.cu">
       <Filter>소스 파일</Filter>
     </CudaCompile>
   </ItemGroup>

@@ -98,3 +98,52 @@ int Reduce(int * ptr, int size, E_BOPER index) {
 	cudaFree(deviceDst);
 	return hostDst;
 }
+
+__global__ void GetGLCM(
+	unsigned int * comatrix, size_t comatrixColLength, WORD * image, size_t rowLength, size_t colLength, int deltaRow, int deltaCol
+) {
+	size_t rowIndex = blockIdx.x * blockDim.x + threadIdx.x;
+	size_t colIndex = blockIdx.y * blockDim.y + threadIdx.y;
+	if (!(rowIndex < rowLength && colIndex < colLength)){
+		return;
+	}
+	if ((deltaRow > 0 && rowIndex + deltaRow >= rowLength)
+		|| (deltaRow < 0 && rowIndex - deltaRow < 0)){
+		return;
+	}
+	if ((deltaCol > 0 && colIndex + deltaCol >= colLength)
+		|| (deltaCol < 0 && colIndex - deltaCol < 0)) {
+		return;
+	}
+
+	size_t currIndex = rowIndex * colLength + colIndex;
+	size_t nearIndex = (rowIndex + deltaRow) * colLength + (colIndex + deltaCol);
+	size_t comatrixIndex = image[currIndex] * comatrixColLength + image[nearIndex];
+	printf("%d, %d: %d, %d (%d)\n", rowIndex, colIndex, image[currIndex], image[nearIndex], comatrixIndex);
+
+	atomicAdd(comatrix + comatrixIndex, (unsigned int)1);
+}
+
+unsigned int * GetComatrix(WORD * image, size_t rowLength, size_t colLength)
+{
+	size_t comtrixColLength = 9;
+	size_t comatrixLength = comtrixColLength * comtrixColLength;
+
+	unsigned int *hostComatrix = new unsigned int[comatrixLength] {0};
+	unsigned int *deviceComatrix;
+	cudaMalloc(&deviceComatrix, sizeof(unsigned int) * comatrixLength);
+	cudaMemcpy(deviceComatrix, hostComatrix, sizeof(unsigned int) * comatrixLength, cudaMemcpyHostToDevice);
+	WORD *deviceImage;
+	cudaMalloc(&deviceImage, sizeof(WORD) * rowLength * colLength);
+	cudaMemcpy(deviceImage, image, sizeof(WORD) * rowLength * colLength, cudaMemcpyHostToDevice);
+
+	dim3 threads(16, 16);
+	dim3 blocks(1 + rowLength / 16, 1 + colLength / 16);
+	GetGLCM << <blocks, threads >> > (deviceComatrix, comtrixColLength, deviceImage, rowLength, colLength, 0, 1);
+
+	cudaMemcpy(hostComatrix, deviceComatrix, sizeof(unsigned int) * comatrixLength, cudaMemcpyDeviceToHost);
+
+	cudaFree(deviceComatrix);
+	cudaFree(deviceImage);
+	return hostComatrix;
+}
