@@ -237,9 +237,12 @@ void TestGLCM() {
 	}
 }
 
+#include "AtomicAdd.hpp"
+
 int main() {
 	//TestGLCM();
-	TestStruct();
+	//TestStruct();
+	TestAtomicAdd();
 	cout << "프로그램이 종료되었습니다." << endl;
 	char tmp[100];
 	cin >> tmp;

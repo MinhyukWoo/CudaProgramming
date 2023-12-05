@@ -50,6 +50,12 @@
     <ClInclude Include="struct.hpp">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="ConvertType.hpp">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="AtomicAdd.hpp">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Lenna.png">
@@ -73,6 +79,12 @@
       <Filter>소스 파일</Filter>
     </CudaCompile>
     <CudaCompile Include="struct.cu">
+      <Filter>소스 파일</Filter>
+    </CudaCompile>
+    <CudaCompile Include="CconvertType.cu">
+      <Filter>소스 파일</Filter>
+    </CudaCompile>
+    <CudaCompile Include="AtomicAdd.cu">
       <Filter>소스 파일</Filter>
     </CudaCompile>
   </ItemGroup>

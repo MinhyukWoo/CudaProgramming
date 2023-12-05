@@ -119,6 +119,8 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <CudaCompile Include="AtomicAdd.cu" />
+    <CudaCompile Include="CconvertType.cu" />
     <CudaCompile Include="GPUManager.cpp" />
     <CudaCompile Include="ImageBlender2d.cu" />
     <CudaCompile Include="MultiplicationTable.cu">
@@ -129,6 +131,8 @@
     <CudaCompile Include="VectorAdditionUsingStream.cu" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AtomicAdd.hpp" />
+    <ClInclude Include="ConvertType.hpp" />
     <ClInclude Include="GPUEnum.cuh" />
     <ClInclude Include="GPUFunctions.hpp" />
     <ClInclude Include="GPUManager.hpp" />
